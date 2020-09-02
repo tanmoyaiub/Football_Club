@@ -1,0 +1,273 @@
+﻿@model Final_Football_Club.Models.Coach
+
+@{
+    if (Session["UserName"] == null)
+    {
+        Response.Redirect("../Home/Login");
+    }
+    ViewBag.Title = "Coach Dashboard";
+
+
+}
+<style>
+    .dropbtn {
+        background-color: black;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        color: white;
+        position: absolute;
+        background-color: black;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        color: white;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: black;
+    }
+
+    body {
+        font-family: Segoe UI, sans-serif;
+        font-size: 20px;
+        color: black;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .main-container {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 50px;
+        padding: 0 0 50px 50px;
+        border: 5px solid black;
+        border-radius: 5px;
+        /* CSS GRID LAYOUT */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        grid-gap: 5px;
+        background-color: silver;
+        border-color: mediumvioletred;
+    }
+
+    header {
+        /* CSS GRID LAYOUT */
+        grid-column: 1 / 3;
+        margin-right: 40px;
+        border-bottom: 5px solid black;
+    }
+
+    .profile-photo {
+        /* CSS GRID LAYOUT */
+        grid-column: 1 / 2;
+    }
+
+        .profile-photo > img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+    .profile-info-1 {
+        /* CSS GRID LAYOUT */
+        margin-top: 35px;
+        margin-right: 60px;
+        grid-column: 2 / 3;
+    }
+
+
+    td {
+        padding: 5px;
+    }
+
+    .label {
+        font-weight: 500;
+        font-size: 20px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .button-container {
+        display: inline-flex;
+        /* CSS GRID LAYOUT */
+        grid-column: 1 / 3;
+        margin-right: 50px;
+    }
+
+    .button {
+        margin-top: 30px;
+        margin: auto;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 27px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        color: black;
+    }
+
+    .label {
+        color: black;
+    }
+
+    .button-accent {
+        color: white;
+        background-color: azure;
+        transition: background-color 0.5s ease;
+    }
+
+        .button-accent:hover {
+            background-color: burlywood;
+        }
+</style>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            @Html.ActionLink("FootBall Club", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Match Info", "Index", "Match", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Player Achievement", "Index", "Goals", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Select Player", "SelectPlayerForTeam", "Team", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Proposed Next Team", "ProposedTeam", "Team", new { area = "" }, new { @class = "navbar-brand" })
+            <a href="/Notification" class="navbar-brand">Notification (@Session["Notifications"])</a>
+
+
+
+            <div class="dropdown">
+                <label class="dropbtn">MemberList</label>
+                <div class="dropdown-content">
+
+                    <a>
+                        @Html.ActionLink("PlayerList", "PlayerList", "Player", new { area = "" }, new { @class = "navbar-brand" })
+                    </a>
+                    <a>
+                        @Html.ActionLink("CoachList", "CoachList", "Coach", new { area = "" }, new { @class = "navbar-brand" })
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
+    </div>
+</div>
+<h2>Coach Dashboard</h2>
+<html>
+<head>
+
+</head>
+
+<body>
+    <div class="main-container">
+
+
+        <header>
+            <h2>Profile</h2>
+        </header>
+
+
+
+
+        <div class="profile-info-1">
+            <table>
+                <tr>
+                    <td class="label">
+                        Username :
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.UserName)
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="label">
+                        Name:
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        Email :
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        Password :
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Password)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">
+                        Salary :
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Salary)
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+
+        <div class="profile-info-2">
+
+        </div>
+
+
+        <div class="button-container">
+            <button class="button button-accent">@Html.ActionLink("Edit Profile", "../Admin/Edit", new { id = Model.UserName })</button>
+        </div>
+
+
+    </div>
+</body>
+</html>

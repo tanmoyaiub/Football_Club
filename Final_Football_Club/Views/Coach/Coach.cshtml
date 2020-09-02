@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Coach";
+    if (Session["UserName"] == null)
+    {
+        Response.Redirect("../Home/Login");
+    }
+}
+
+<h2>Coach DashBoard</h2>
+
+
+<h2>Welcome @Session["UserName"]</h2>
+
+<a href="/Coach/Details"><button>My Profile</button></a>
+<a href="/Match/Index"><button>Match info.</button></a>
+<a href="/Goals/Index"><button>Player Achivement</button></a>
+<a href="/Team/SelectPlayerForTeam"><button>Select Player</button></a><br /><br/>
+<a href="/Team/ProposedTeam"><button>Proposed Next Team</button></a>
+<a href="/Notification"><button>Notification (@Session["Notifications"])</button></a>
+<a href="/Team/ProposedTeam"><button>Proposed Next Team</button></a>
+<a href="/Home/Logout"><button>Logout</button></a>

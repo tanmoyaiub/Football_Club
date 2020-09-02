@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5716c09e28094c61b334d2a31d637816" Name="Diagram1">
+        <EntityTypeShape EntityType="ClubModel.Coach" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.Goal" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.Match" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.Notification" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.Player" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.SignUp" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClubModel.TeamForMatch" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="ClubModel.FK_Coachs_SignUp" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_Goals_Matches" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_Goals_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_TeamForMatch_Matches" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_Notification_SignUp" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_Player_SignUp" ManuallyRouted="false" />
+        <AssociationConnector Association="ClubModel.FK_TeamForMatch_Player" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ClubModel.History" Width="1.5" PointX="5.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

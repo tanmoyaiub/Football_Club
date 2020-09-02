@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Final_Football_Club.Models.History>
+
+@{
+    ViewBag.Title = "HistoryList";
+}
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages' :[ 'corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Achivements');
+        data.addColumn('number', 'Count');
+        data.addRows([
+          ['Final', @Model.Where(x=>x.Achivements == "Final").Count()],
+          ['Semi-Final', @Model.Where(x=>x.Achivements == "Semi-Final").Count()],
+          ['Champion', @Model.Where(x=>x.Achivements == "Champion").Count()],
+          ['Quarter-Final', @Model.Where(x=>x.Achivements == "Quarter-Final").Count()],
+          ['First-Runnersup', @Model.Where(x=>x.Achivements == "First-Runnersup").Count()],
+          ['Second-Runnersup', @Model.Where(x=>x.Achivements == "Second-Runnersup").Count()]
+        ]);
+        var options = {'title':'Achievement Status',
+                       'width':400,
+                       'height':300};
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+</script>
+
+<h2>HistoryList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "HistoryCreate")
+</p>
+
+<div id="chart_div"></div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Seasons)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tournament)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Achivements)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seasons)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tournament)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achivements)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

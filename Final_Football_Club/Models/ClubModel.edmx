@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Coachs">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="float" Nullable="false" />
+          <Property Name="Iamge" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Goals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlayerUserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MatchId" Type="int" Nullable="false" />
+          <Property Name="NumberOfGoals" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Card" Type="varchar" MaxLength="50" />
+          <Property Name="Point" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Seasons" Type="varchar" MaxLength="50" />
+          <Property Name="Tournament" Type="varchar" MaxLength="50" />
+          <Property Name="Coach" Type="varchar" MaxLength="50" />
+          <Property Name="Achivements" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Date" Type="datetime" />
+          <Property Name="OppositeTeam" Type="varchar" MaxLength="50" />
+          <Property Name="Result" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Point" Type="int" />
+          <Property Name="Goals" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="nchar" MaxLength="500" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Position" Type="varchar" MaxLength="50" />
+          <Property Name="Salary" Type="float" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="SignUp">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="float" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamForMatch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="bit" />
+          <Property Name="MatchID" Type="int" />
+          <Property Name="Team" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Coachs_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Coachs" Type="Self.Coachs" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Coachs">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goals_Matches">
+          <End Role="Matches" Type="Self.Matches" Multiplicity="1" />
+          <End Role="Goals" Type="Self.Goals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goals_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Goals" Type="Self.Goals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="PlayerUserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamForMatch_Matches">
+          <End Role="Matches" Type="Self.Matches" Multiplicity="0..1" />
+          <End Role="TeamForMatch" Type="Self.TeamForMatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamForMatch">
+              <PropertyRef Name="MatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamForMatch_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="TeamForMatch" Type="Self.TeamForMatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="TeamForMatch">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClubModelStoreContainer">
+          <EntitySet Name="Coachs" EntityType="Self.Coachs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Goals" EntityType="Self.Goals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SignUp" EntityType="Self.SignUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamForMatch" EntityType="Self.TeamForMatch" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Coachs_SignUp" Association="Self.FK_Coachs_SignUp">
+            <End Role="SignUp" EntitySet="SignUp" />
+            <End Role="Coachs" EntitySet="Coachs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goals_Matches" Association="Self.FK_Goals_Matches">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goals_Player" Association="Self.FK_Goals_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_SignUp" Association="Self.FK_Notification_SignUp">
+            <End Role="SignUp" EntitySet="SignUp" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_SignUp" Association="Self.FK_Player_SignUp">
+            <End Role="SignUp" EntitySet="SignUp" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamForMatch_Matches" Association="Self.FK_TeamForMatch_Matches">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="TeamForMatch" EntitySet="TeamForMatch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamForMatch_Player" Association="Self.FK_TeamForMatch_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="TeamForMatch" EntitySet="TeamForMatch" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Coach">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Age" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SignUp" Relationship="Self.FK_Coachs_SignUp" FromRole="Coachs" ToRole="SignUp" />
+          <Property Name="Iamge" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Goal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MatchId" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfGoals" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Card" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_Goals_Matches" FromRole="Goals" ToRole="Matches" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Goals_Player" FromRole="Goals" ToRole="Player" />
+          <Property Name="Point" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="OppositeTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Result" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Point" Type="Int32" />
+          <Property Name="Goals" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Goals1" Relationship="Self.FK_Goals_Matches" FromRole="Matches" ToRole="Goals" />
+          <NavigationProperty Name="TeamForMatches" Relationship="Self.FK_TeamForMatch_Matches" FromRole="Matches" ToRole="TeamForMatch" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SignUp" Relationship="Self.FK_Notification_SignUp" FromRole="Notification" ToRole="SignUp" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Age" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Goals" Relationship="Self.FK_Goals_Player" FromRole="Player" ToRole="Goals" />
+          <NavigationProperty Name="SignUp" Relationship="Self.FK_Player_SignUp" FromRole="Player" ToRole="SignUp" />
+          <NavigationProperty Name="TeamForMatches" Relationship="Self.FK_TeamForMatch_Player" FromRole="Player" ToRole="TeamForMatch" />
+          <Property Name="Image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SignUp">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Double" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Coach" Relationship="Self.FK_Coachs_SignUp" FromRole="SignUp" ToRole="Coachs" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_SignUp" FromRole="SignUp" ToRole="Notification" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Player_SignUp" FromRole="SignUp" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="TeamForMatch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" />
+          <Property Name="MatchID" Type="Int32" />
+          <Property Name="Team" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Match" Relationship="Self.FK_TeamForMatch_Matches" FromRole="TeamForMatch" ToRole="Matches" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_TeamForMatch_Player" FromRole="TeamForMatch" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_Coachs_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Coachs" Type="Self.Coach" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Coachs">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goals_Matches">
+          <End Role="Matches" Type="Self.Match" Multiplicity="1" />
+          <End Role="Goals" Type="Self.Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Goals_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Goals" Type="Self.Goal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Goals">
+              <PropertyRef Name="PlayerUserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamForMatch_Matches">
+          <End Role="Matches" Type="Self.Match" Multiplicity="0..1" />
+          <End Role="TeamForMatch" Type="Self.TeamForMatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamForMatch">
+              <PropertyRef Name="MatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_SignUp">
+          <End Role="SignUp" Type="Self.SignUp" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SignUp">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamForMatch_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="TeamForMatch" Type="Self.TeamForMatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="TeamForMatch">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Coachs" EntityType="Self.Coach" />
+          <EntitySet Name="Goals" EntityType="Self.Goal" />
+          <EntitySet Name="Matches" EntityType="Self.Match" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="SignUps" EntityType="Self.SignUp" />
+          <EntitySet Name="TeamForMatches" EntityType="Self.TeamForMatch" />
+          <AssociationSet Name="FK_Coachs_SignUp" Association="Self.FK_Coachs_SignUp">
+            <End Role="SignUp" EntitySet="SignUps" />
+            <End Role="Coachs" EntitySet="Coachs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goals_Matches" Association="Self.FK_Goals_Matches">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goals_Player" Association="Self.FK_Goals_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Goals" EntitySet="Goals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamForMatch_Matches" Association="Self.FK_TeamForMatch_Matches">
+            <End Role="Matches" EntitySet="Matches" />
+            <End Role="TeamForMatch" EntitySet="TeamForMatches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_SignUp" Association="Self.FK_Notification_SignUp">
+            <End Role="SignUp" EntitySet="SignUps" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_SignUp" Association="Self.FK_Player_SignUp">
+            <End Role="SignUp" EntitySet="SignUps" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamForMatch_Player" Association="Self.FK_TeamForMatch_Player">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="TeamForMatch" EntitySet="TeamForMatches" />
+          </AssociationSet>
+          <EntitySet Name="Histories" EntityType="ClubModel.History" />
+        </EntityContainer>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Seasons" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tournament" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Coach" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Achivements" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClubModelStoreContainer" CdmEntityContainer="ClubEntities">
+          <EntitySetMapping Name="Coachs">
+            <EntityTypeMapping TypeName="ClubModel.Coach">
+              <MappingFragment StoreEntitySet="Coachs">
+                <ScalarProperty Name="Iamge" ColumnName="Iamge" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goals">
+            <EntityTypeMapping TypeName="ClubModel.Goal">
+              <MappingFragment StoreEntitySet="Goals">
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlayerUserName" ColumnName="PlayerUserName" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="NumberOfGoals" ColumnName="NumberOfGoals" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Card" ColumnName="Card" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="ClubModel.Match">
+              <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OppositeTeam" ColumnName="OppositeTeam" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Goals" ColumnName="Goals" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="ClubModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="ClubModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SignUps">
+            <EntityTypeMapping TypeName="ClubModel.SignUp">
+              <MappingFragment StoreEntitySet="SignUp">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamForMatches">
+            <EntityTypeMapping TypeName="ClubModel.TeamForMatch">
+              <MappingFragment StoreEntitySet="TeamForMatch">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Histories">
+            <EntityTypeMapping TypeName="ClubModel.History">
+              <MappingFragment StoreEntitySet="History">
+                <ScalarProperty Name="Achivements" ColumnName="Achivements" />
+                <ScalarProperty Name="Coach" ColumnName="Coach" />
+                <ScalarProperty Name="Tournament" ColumnName="Tournament" />
+                <ScalarProperty Name="Seasons" ColumnName="Seasons" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

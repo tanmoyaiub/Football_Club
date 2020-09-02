@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Contact Us";
+}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            @Html.ActionLink("FootBall Club", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Contact us", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Achievement", "ClubHistory", "Player", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("About us", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .main-container {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 50px;
+        padding: 0 0 50px 50px;
+        border: 5px solid black;
+        border-radius: 5px;
+        /* CSS GRID LAYOUT */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        grid-gap: 5px;
+        background-color: silver;
+        border-color: mediumvioletred;
+    }
+</style>
+<div class="main-container">
+    <h2 style="border-bottom: 2px solid;margin-left:80px">Contact Us</h2>
+    <br />
+    <h3> Contact us : aatp4367@gmail.com</h3>
+</div>

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Final_Football_Club.Models.Player>
+
+
+@{
+    ViewBag.Title = "PlayerList";
+    double totalinvestment = 0;
+
+}
+
+<h2>PlayerList</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        totalinvestment += item.Salary;
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "../Player/PlayerListEdit", new { id = item.UserName }) |
+            </td>
+        </tr>
+    }
+</table>
+<div colspane="4" style="text-align:right">
+    <h2>Invesment on Player : @totalinvestment.ToString() BDT</h2>
+</div>
+<div>
+    @Html.ActionLink("Back to Profile", "../Admin/AdminDashboard")
+</div>
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Poistion", "Numbers", { role: "style" }],
+            ["Defender", @Model.Where(x => x.Position == "Defender").Count(), "#b87333"],
+            ["Goalkeeper", @Model.Where(x => x.Position == "Goalkeeper").Count(), "silver"],
+            ["Midfeilder", @Model.Where(x => x.Position == "Midfielder").Count(), "gold"],
+            ["Striker", @Model.Where(x => x.Position == "Striker").Count(), "color: violet"]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+        var options = {
+            title: "Number of Players From Different Positon",
+            width: 600,
+            height: 400,
+            bar: { groupWidth: "95%" },
+            legend: { position: "none" },
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+        chart.draw(view, options);
+    }
+</script>
+<div id="columnchart_values" style="width: 900px; height: 300px;"></div>

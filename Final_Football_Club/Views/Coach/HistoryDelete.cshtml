@@ -1,0 +1,56 @@
+﻿@model Final_Football_Club.Models.History
+
+@{
+    ViewBag.Title = "HistoryDelete";
+}
+
+<h2>HistoryDelete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>History</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Seasons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seasons)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tournament)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tournament)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Coach)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Coach)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Achivements)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Achivements)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

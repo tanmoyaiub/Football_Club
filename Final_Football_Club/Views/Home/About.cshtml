@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "About";
+}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            @Html.ActionLink("FootBall Club", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Contact us", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Achievement", "ClubHistory", "Player", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("About us", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .main-container {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 50px;
+        padding: 0 0 50px 50px;
+        border: 5px solid black;
+        border-radius: 5px;
+        /* CSS GRID LAYOUT */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        grid-gap: 5px;
+        background-color: silver;
+        border-color: mediumvioletred;
+    }
+
+    .center {
+        margin: auto;
+        width: 200%;
+        padding: 10px;
+    }
+</style>
+<div class="main-container">
+    <div class="center">
+        <h2 class="">About Us</h2>
+
+        <br />
+
+        <label class="center">
+            Team America is open again including summer camps.
+            Our camps are kept to small numbers of players.
+            Coach Jonny runs the camp.
+            Coach Jonny has completed his Red Cross first aid certification and is tested regularly for Covid.
+            When a player comes to camp the player must wear masks, use hand sanitizers as directed and have their temperature taken before entering each day.
+        </label>
+    </div>
+</div>
+
